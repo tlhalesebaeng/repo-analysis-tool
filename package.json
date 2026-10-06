@@ -1,0 +1,32 @@
+{
+  "name": "repo-analysis-tool",
+  "version": "0.1.0",
+  "private": true,
+  "description": "RAT (Repo Analysis Tool) - git repository metrics dashboard",
+  "license": "UNLICENSED",
+  "type": "module",
+  "workspaces": [
+    "server",
+    "web",
+    "shared"
+  ],
+  "engines": {
+    "node": ">=18.19.0"
+  },
+  "scripts": {
+    "dev": "concurrently -n api,web -c blue,green \"npm:dev -w server\" \"npm:dev -w web\"",
+    "start": "npm run start -w server",
+    "build": "npm run build -w web",
+    "preview": "npm run preview -w web",
+    "lint": "eslint .",
+    "test": "npm run test -w server"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "concurrently": "^9.2.4",
+    "eslint": "^9.39.5",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.13.0"
+  }
+}
