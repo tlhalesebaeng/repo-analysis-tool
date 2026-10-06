@@ -14,8 +14,8 @@ export default function DirectoriesPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-white">Directories</h2>
-        <p className="mt-1 text-sm text-slate-400">
+        <h2 className="text-2xl font-bold text-slate-900">Directories</h2>
+        <p className="mt-1 text-sm text-slate-500">
           Recursive subtree sums per directory — the root row is the repository itself
           {data ? `, |H| = ${fmtInt(data.hSize)}` : ''}.
         </p>
@@ -42,14 +42,14 @@ export default function DirectoriesPage() {
             {data.rows.map((d) => {
               const isRoot = d.dirPath === '';
               return (
-                <tr key={d.dirPath} className={`transition hover:bg-white/[0.03] ${isRoot ? 'bg-violet-500/10' : ''}`}>
+                <tr key={d.dirPath} className={`transition hover:bg-slate-50 ${isRoot ? 'bg-violet-500/10' : ''}`}>
                   <Td className="max-w-96 font-mono text-[13px]">
-                    <span style={{ paddingLeft: (d.depth - (isRoot ? 0 : 1)) * 16 }} className={isRoot ? 'font-semibold text-violet-200' : 'text-slate-300'}>
+                    <span style={{ paddingLeft: (d.depth - (isRoot ? 0 : 1)) * 16 }} className={isRoot ? 'font-semibold text-violet-700' : 'text-slate-600'}>
                       {isRoot ? '⌂ repository root' : `${d.dirPath.split('/').pop()}/`}
                     </span>
                   </Td>
                   <MetricCells row={d} />
-                  <NumTd className="text-slate-400">{fmtInt(d.files)}</NumTd>
+                  <NumTd className="text-slate-500">{fmtInt(d.files)}</NumTd>
                 </tr>
               );
             })}

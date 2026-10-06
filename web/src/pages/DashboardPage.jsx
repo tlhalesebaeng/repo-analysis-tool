@@ -17,9 +17,9 @@ export default function DashboardPage() {
     return (
       <div className="space-y-6">
         <FilterBar />
-        <div className="rounded-2xl border border-dashed border-white/10 bg-slate-900/40 p-16 text-center">
+        <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-16 text-center">
           <p className="text-3xl">📊</p>
-          <p className="mt-2 font-semibold text-slate-300">Select a repository</p>
+          <p className="mt-2 font-semibold text-slate-600">Select a repository</p>
           <p className="text-sm text-slate-500">Pick a repository in the filter bar to see its dashboard.</p>
         </div>
       </div>
@@ -44,10 +44,10 @@ export default function DashboardPage() {
             <StatCard label="Current LOC" value={fmtCompact(s.loc)} sub="HEAD snapshot" icon="ℹ" tone="violet" />
           </div>
 
-          <div className="rounded-2xl border border-white/10 bg-slate-900/60 p-5 backdrop-blur">
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 backdrop-blur">
             <div className="mb-2 flex flex-wrap items-center justify-between gap-3">
-              <h3 className="font-semibold text-white">History</h3>
-              <div className="flex gap-1 rounded-xl bg-white/5 p-1 text-xs font-semibold">
+              <h3 className="font-semibold text-slate-900">History</h3>
+              <div className="flex gap-1 rounded-xl bg-slate-100 p-1 text-xs font-semibold">
                 {[
                   ['churn', 'Churn λ'],
                   ['commits', 'Commits'],
@@ -57,7 +57,7 @@ export default function DashboardPage() {
                     key={key}
                     type="button"
                     onClick={() => setMetric(key)}
-                    className={`rounded-lg px-3 py-1 transition ${metric === key ? 'bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white' : 'text-slate-400 hover:text-slate-200'}`}
+                    className={`rounded-lg px-3 py-1 transition ${metric === key ? 'bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white' : 'text-slate-500 hover:text-slate-700'}`}
                   >
                     {label}
                   </button>
@@ -68,7 +68,7 @@ export default function DashboardPage() {
           </div>
 
           <div>
-            <h3 className="mb-2 font-semibold text-white">Top authors</h3>
+            <h3 className="mb-2 font-semibold text-slate-900">Top authors</h3>
             <Table>
               <thead>
                 <tr>
@@ -79,10 +79,10 @@ export default function DashboardPage() {
               </thead>
               <tbody>
                 {s.topAuthors.map((a) => (
-                  <tr key={a.author_id} className="transition hover:bg-white/[0.03]">
-                    <Td className="max-w-64 truncate font-medium text-slate-200">{a.display_name}</Td>
+                  <tr key={a.author_id} className="transition hover:bg-slate-50">
+                    <Td className="max-w-64 truncate font-medium text-slate-700">{a.display_name}</Td>
                     <MetricCells row={a} />
-                    <NumTd className="text-slate-300">{fmtInt(a.commits)}</NumTd>
+                    <NumTd className="text-slate-600">{fmtInt(a.commits)}</NumTd>
                     <NumTd>
                       <Bar fraction={a.omega} className="bg-gradient-to-r from-cyan-500 to-sky-400" />
                     </NumTd>

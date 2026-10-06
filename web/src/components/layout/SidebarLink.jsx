@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
-/** Single sidebar navigation entry with gradient active-state styling. */
+/** Single sidebar navigation entry with a soft violet active state. */
 export default function SidebarLink({ to, label, icon }) {
   return (
     <NavLink
@@ -8,8 +8,8 @@ export default function SidebarLink({ to, label, icon }) {
       className={({ isActive }) =>
         `flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium transition ${
           isActive
-            ? 'bg-gradient-to-r from-violet-500/25 to-fuchsia-500/10 text-white shadow-inner'
-            : 'text-slate-400 hover:bg-white/5 hover:text-slate-200'
+            ? 'bg-violet-100 text-violet-700 shadow-[inset_2px_0_0_0_theme(colors.violet.500)]'
+            : 'text-slate-500 hover:bg-slate-100 hover:text-slate-700'
         }`
       }
     >

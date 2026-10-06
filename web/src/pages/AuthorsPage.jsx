@@ -6,7 +6,7 @@ import { filterQuery, useFilter, useJson } from '../store.jsx';
 import { fmtInt } from '../format.js';
 
 const inputCls =
-  'w-full rounded-xl border border-white/10 bg-slate-950/60 px-3 py-2 text-sm text-slate-200 placeholder-slate-600 outline-none transition focus:border-violet-500/60 focus:ring-2 focus:ring-violet-500/20';
+  'w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700 placeholder-slate-400 outline-none transition focus:border-violet-500/60 focus:ring-2 focus:ring-violet-500/20';
 
 /** Inline merge dialog shown when authors are selected. */
 function MergeDialog({ repoId, selected, names, onDone, onCancel }) {
@@ -32,9 +32,9 @@ function MergeDialog({ repoId, selected, names, onDone, onCancel }) {
   };
 
   return (
-    <div className="rounded-2xl border border-violet-500/30 bg-violet-500/5 p-4">
-      <p className="mb-3 font-semibold text-violet-200">
-        Merge {selected.length} authors <span className="font-normal text-slate-400">({names.join(', ')})</span>
+    <div className="rounded-2xl border border-violet-500/30 bg-violet-50 p-4">
+      <p className="mb-3 font-semibold text-violet-700">
+        Merge {selected.length} authors <span className="font-normal text-slate-500">({names.join(', ')})</span>
       </p>
       <div className="flex flex-wrap gap-3">
         <input className={`${inputCls} flex-1`} placeholder="Display name (default: first author)" value={displayName} onChange={(e) => setDisplayName(e.target.value)} />
@@ -48,7 +48,7 @@ function MergeDialog({ repoId, selected, names, onDone, onCancel }) {
           >
             {busy ? 'Merging…' : 'Merge'}
           </button>
-          <button type="button" onClick={onCancel} className="rounded-xl px-3 py-2 text-sm text-slate-400 hover:text-slate-200">
+          <button type="button" onClick={onCancel} className="rounded-xl px-3 py-2 text-sm text-slate-500 hover:text-slate-700">
             Cancel
           </button>
         </div>
@@ -85,8 +85,8 @@ export default function AuthorsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-white">Authors</h2>
-        <p className="mt-1 text-sm text-slate-400">
+        <h2 className="text-2xl font-bold text-slate-900">Authors</h2>
+        <p className="mt-1 text-sm text-slate-500">
           Author metrics over the repository (root object){data ? ` — |H| = ${fmtInt(data.hSize)}` : ''}, plus identity merging.
         </p>
       </div>
@@ -124,19 +124,19 @@ export default function AuthorsPage() {
             {data.rows.map((a) => {
               const raw = (rawAuthors ?? []).find((r) => r.id === a.author_id);
               return (
-                <tr key={a.author_id} className={`transition hover:bg-white/[0.03] ${selected.includes(a.author_id) ? 'bg-violet-500/10' : ''}`}>
+                <tr key={a.author_id} className={`transition hover:bg-slate-50 ${selected.includes(a.author_id) ? 'bg-violet-500/10' : ''}`}>
                   <Td className="text-center">
                     <input type="checkbox" className="accent-violet-500" checked={selected.includes(a.author_id)} onChange={() => toggle(a.author_id)} />
                   </Td>
                   <Td className="max-w-64">
-                    <p className="truncate font-medium text-slate-200">{a.display_name}</p>
+                    <p className="truncate font-medium text-slate-700">{a.display_name}</p>
                     {raw && raw.identities.length > 1 ? (
-                      <p className="truncate text-[11px] text-slate-600">{raw.identities.map((i) => `${i.name} <${i.email}>`).join(' · ')}</p>
+                      <p className="truncate text-[11px] text-slate-400">{raw.identities.map((i) => `${i.name} <${i.email}>`).join(' · ')}</p>
                     ) : null}
                   </Td>
                   <MetricCells row={a} />
-                  <NumTd className="text-slate-300">{fmtInt(a.commits)}</NumTd>
-                  <NumTd className="text-slate-400">{raw?.identities.length ?? 1}</NumTd>
+                  <NumTd className="text-slate-600">{fmtInt(a.commits)}</NumTd>
+                  <NumTd className="text-slate-500">{raw?.identities.length ?? 1}</NumTd>
                   <NumTd>
                     <Bar fraction={a.omega} className="bg-gradient-to-r from-cyan-500 to-sky-400" />
                   </NumTd>
@@ -145,12 +145,12 @@ export default function AuthorsPage() {
                       <button
                         type="button"
                         onClick={() => unmerge(a.author_id)}
-                        className="rounded-lg px-2 py-1 text-xs font-semibold text-slate-500 transition hover:bg-cyan-500/10 hover:text-cyan-300"
+                        className="rounded-lg px-2 py-1 text-xs font-semibold text-slate-500 transition hover:bg-cyan-500/10 hover:text-cyan-600"
                       >
                         Split
                       </button>
                     ) : (
-                      <span className="text-xs text-slate-700">—</span>
+                      <span className="text-xs text-slate-400">—</span>
                     )}
                   </Td>
                 </tr>
@@ -160,9 +160,9 @@ export default function AuthorsPage() {
         </Table>
       ) : null}
       {!f.repoId ? (
-        <div className="rounded-2xl border border-dashed border-white/10 bg-slate-900/40 p-16 text-center">
+        <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-16 text-center">
           <p className="text-3xl">👥</p>
-          <p className="mt-2 font-semibold text-slate-300">Select a repository</p>
+          <p className="mt-2 font-semibold text-slate-600">Select a repository</p>
         </div>
       ) : null}
     </div>

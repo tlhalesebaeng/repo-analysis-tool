@@ -7,7 +7,7 @@ import TopBar from './TopBar.jsx';
 export default function AppLayout() {
   return (
     <FilterProvider>
-      <div className="flex min-h-screen bg-slate-950 text-slate-200">
+      <div className="flex min-h-screen bg-slate-50 text-slate-700">
         <Sidebar />
         <div className="flex min-w-0 flex-1 flex-col">
           <TopBar />

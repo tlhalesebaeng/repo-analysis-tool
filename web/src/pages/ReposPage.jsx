@@ -5,8 +5,8 @@ import { fmtCompact, fmtInt } from '../format.js';
 import { ErrorNote, Spinner } from '../components/ui/widgets.jsx';
 
 const inputCls =
-  'w-full rounded-xl border border-white/10 bg-slate-950/60 px-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none transition focus:border-violet-500/60 focus:ring-2 focus:ring-violet-500/20';
-const cardCls = 'rounded-2xl border border-white/10 bg-slate-900/60 p-5 backdrop-blur';
+  'w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 placeholder-slate-400 outline-none transition focus:border-violet-500/60 focus:ring-2 focus:ring-violet-500/20';
+const cardCls = 'rounded-2xl border border-slate-200 bg-white p-5 backdrop-blur';
 
 function ImportCard({ onDone }) {
   const [mode, setMode] = useState('url');
@@ -54,14 +54,14 @@ function ImportCard({ onDone }) {
 
   return (
     <form onSubmit={submit} className={cardCls}>
-      <div className="mb-4 flex gap-1 rounded-xl bg-white/5 p-1">
+      <div className="mb-4 flex gap-1 rounded-xl bg-slate-100 p-1">
         {['url', 'zip'].map((m) => (
           <button
             key={m}
             type="button"
             onClick={() => setMode(m)}
             className={`flex-1 rounded-lg px-3 py-1.5 text-sm font-semibold capitalize transition ${
-              mode === m ? 'bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white shadow' : 'text-slate-400 hover:text-slate-200'
+              mode === m ? 'bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white shadow' : 'text-slate-500 hover:text-slate-700'
             }`}
           >
             {m === 'url' ? 'Clone URL' : 'Zip upload'}
@@ -72,10 +72,10 @@ function ImportCard({ onDone }) {
         {mode === 'url' ? (
           <input className={inputCls} placeholder="https://github.com/DaveGamble/cJSON.git" value={url} onChange={(e) => setUrl(e.target.value)} required />
         ) : (
-          <label className="flex cursor-pointer flex-col items-center gap-2 rounded-xl border border-dashed border-white/15 bg-slate-950/40 px-4 py-8 text-center transition hover:border-violet-500/50">
+          <label className="flex cursor-pointer flex-col items-center gap-2 rounded-xl border border-dashed border-slate-300 bg-slate-50 px-4 py-8 text-center transition hover:border-violet-500/50">
             <span className="text-2xl">📦</span>
-            <span className="text-sm text-slate-300">{file ? file.name : 'Drop or choose a repository .zip'}</span>
-            <span className="text-xs text-slate-600">a zip containing a .git directory (or a bare repo layout)</span>
+            <span className="text-sm text-slate-600">{file ? file.name : 'Drop or choose a repository .zip'}</span>
+            <span className="text-xs text-slate-400">a zip containing a .git directory (or a bare repo layout)</span>
             <input
               ref={fileRef}
               type="file"
@@ -104,10 +104,10 @@ function ImportCard({ onDone }) {
 }
 
 const statusTone = {
-  ready: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300',
-  importing: 'border-violet-500/30 bg-violet-500/10 text-violet-300',
-  pending: 'border-amber-500/30 bg-amber-500/10 text-amber-300',
-  failed: 'border-rose-500/30 bg-rose-500/10 text-rose-300',
+  ready: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-600',
+  importing: 'border-violet-500/30 bg-violet-500/10 text-violet-600',
+  pending: 'border-amber-500/30 bg-amber-500/10 text-amber-600',
+  failed: 'border-rose-500/30 bg-rose-500/10 text-rose-600',
 };
 
 /** Import wizard + repository cards with live progress polling. */
@@ -125,8 +125,8 @@ export default function ReposPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-white">Repositories</h2>
-        <p className="mt-1 text-sm text-slate-400">Import a git repository from a URL or a zip archive, then explore its metrics.</p>
+        <h2 className="text-2xl font-bold text-slate-900">Repositories</h2>
+        <p className="mt-1 text-sm text-slate-500">Import a git repository from a URL or a zip archive, then explore its metrics.</p>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[380px_1fr]">
@@ -137,10 +137,10 @@ export default function ReposPage() {
           <ErrorNote error={error} />
           <div className="grid gap-4 sm:grid-cols-2">
             {(repos ?? []).map((r) => (
-              <div key={r.id} className="group relative rounded-2xl border border-white/10 bg-slate-900/60 p-5 backdrop-blur transition hover:border-violet-500/40">
+              <div key={r.id} className="group relative rounded-2xl border border-slate-200 bg-white p-5 backdrop-blur transition hover:border-violet-500/40">
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
-                    <p className="truncate font-semibold text-white">{r.name}</p>
+                    <p className="truncate font-semibold text-slate-900">{r.name}</p>
                     <p className="mt-0.5 truncate text-xs text-slate-500">
                       {r.source_type === 'zip' ? 'zip upload' : r.source_ref} · ref {r.reference}
                     </p>
@@ -156,7 +156,7 @@ export default function ReposPage() {
                       <span className="capitalize">{r.phase}</span>
                       <span>{r.progress_pct}%</span>
                     </div>
-                    <div className="h-1.5 overflow-hidden rounded-full bg-white/10">
+                    <div className="h-1.5 overflow-hidden rounded-full bg-slate-200">
                       <div
                         className="h-full rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 transition-all duration-500"
                         style={{ width: `${r.progress_pct}%` }}
@@ -164,24 +164,24 @@ export default function ReposPage() {
                     </div>
                   </div>
                 ) : (
-                  <div className="mt-4 flex items-center gap-4 text-sm text-slate-400">
+                  <div className="mt-4 flex items-center gap-4 text-sm text-slate-500">
                     <span className="tabular-nums">
-                      <b className="text-white">{fmtInt(r.commit_count)}</b> commits
+                      <b className="text-slate-900">{fmtInt(r.commit_count)}</b> commits
                     </span>
                     <span className="tabular-nums">
-                      <b className="text-white">{fmtCompact(r.path_count)}</b> paths
+                      <b className="text-slate-900">{fmtCompact(r.path_count)}</b> paths
                     </span>
                   </div>
                 )}
 
-                {r.error ? <p className="mt-3 line-clamp-2 rounded-lg bg-rose-500/10 p-2 text-xs text-rose-300">{r.error}</p> : null}
+                {r.error ? <p className="mt-3 line-clamp-2 rounded-lg bg-rose-500/10 p-2 text-xs text-rose-600">{r.error}</p> : null}
 
                 <div className="mt-4 flex gap-2">
                   {r.status === 'ready' ? (
                     <button
                       type="button"
                       onClick={() => setRepoId(r.id)}
-                      className="rounded-lg bg-white/5 px-3 py-1.5 text-xs font-semibold text-violet-300 transition hover:bg-violet-500/20"
+                      className="rounded-lg bg-slate-100 px-3 py-1.5 text-xs font-semibold text-violet-600 transition hover:bg-violet-500/20"
                     >
                       Select →
                     </button>
@@ -194,7 +194,7 @@ export default function ReposPage() {
                         reload();
                       }
                     }}
-                    className="rounded-lg px-3 py-1.5 text-xs font-semibold text-slate-500 transition hover:bg-rose-500/10 hover:text-rose-300"
+                    className="rounded-lg px-3 py-1.5 text-xs font-semibold text-slate-500 transition hover:bg-rose-500/10 hover:text-rose-600"
                   >
                     Delete
                   </button>
@@ -203,7 +203,7 @@ export default function ReposPage() {
             ))}
           </div>
           {repos && repos.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-white/10 bg-slate-900/40 p-10 text-center text-slate-500">
+            <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-10 text-center text-slate-500">
               No repositories yet — import one to get started.
             </div>
           ) : null}

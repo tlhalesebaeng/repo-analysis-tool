@@ -3,7 +3,7 @@ import { useFilter, useJson } from '../../store.jsx';
 import { localToTs, tsToLocal } from '../../format.js';
 
 const inputCls =
-  'rounded-xl border border-white/10 bg-slate-950/60 px-3 py-2 text-sm text-slate-200 placeholder-slate-600 outline-none transition focus:border-violet-500/60 focus:ring-2 focus:ring-violet-500/20';
+  'rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700 placeholder-slate-400 outline-none transition focus:border-violet-500/60 focus:ring-2 focus:ring-violet-500/20';
 
 /** Author multi-select popover. */
 function AuthorPicker({ authors, selected, onChange }) {
@@ -33,11 +33,11 @@ function AuthorPicker({ authors, selected, onChange }) {
         <span className="text-slate-500">▾</span>
       </button>
       {open ? (
-        <div className="absolute z-30 mt-2 max-h-72 w-64 overflow-auto rounded-xl border border-white/10 bg-slate-900 p-2 shadow-2xl shadow-black/50">
+        <div className="absolute z-30 mt-2 max-h-72 w-64 overflow-auto rounded-xl border border-slate-200 bg-white p-2 shadow-2xl shadow-slate-300/60">
           {authors.map((a) => (
             <label
               key={a.id}
-              className="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-1.5 text-sm text-slate-300 hover:bg-white/5"
+              className="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-1.5 text-sm text-slate-600 hover:bg-slate-100"
             >
               <input
                 type="checkbox"
@@ -48,7 +48,7 @@ function AuthorPicker({ authors, selected, onChange }) {
                 }
               />
               <span className="truncate">{a.display_name}</span>
-              <span className="ml-auto text-xs text-slate-600">{a.commit_count}</span>
+              <span className="ml-auto text-xs text-slate-400">{a.commit_count}</span>
             </label>
           ))}
         </div>
@@ -69,7 +69,7 @@ export default function FilterBar({ showPrefix = false }) {
   const ready = (repos ?? []).filter((r) => r.status === 'ready');
 
   return (
-    <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-white/10 bg-slate-900/60 p-3 backdrop-blur">
+    <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-slate-200 bg-white p-3 backdrop-blur">
       <span className="ml-1 text-xs font-semibold uppercase tracking-wider text-slate-500">Filter</span>
       <select
         value={f.repoId ?? ''}
@@ -92,7 +92,7 @@ export default function FilterBar({ showPrefix = false }) {
           onChange={(e) => f.setFromTs(localToTs(e.target.value))}
           title="From (inclusive)"
         />
-        <span className="text-xs text-slate-600">→</span>
+        <span className="text-xs text-slate-400">→</span>
         <input
           type="datetime-local"
           className={inputCls}
@@ -120,13 +120,13 @@ export default function FilterBar({ showPrefix = false }) {
             f.setAuthorIds([]);
             f.setPathPrefix('');
           }}
-          className="rounded-xl px-3 py-2 text-xs font-semibold text-slate-400 transition hover:bg-white/5 hover:text-slate-200"
+          className="rounded-xl px-3 py-2 text-xs font-semibold text-slate-500 transition hover:bg-slate-100 hover:text-slate-700"
         >
           Reset
         </button>
       )}
-      <span className="ml-auto rounded-lg bg-white/5 px-2 py-1 text-[11px] text-slate-500">
-        to <span className="text-slate-300">exclusive</span> · from <span className="text-slate-300">inclusive</span>
+      <span className="ml-auto rounded-lg bg-slate-100 px-2 py-1 text-[11px] text-slate-500">
+        to <span className="text-slate-600">exclusive</span> · from <span className="text-slate-600">inclusive</span>
       </span>
     </div>
   );

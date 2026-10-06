@@ -10,10 +10,10 @@ const PAGE = 50;
 function CommitSetPanel({ repoId, shas, onClear }) {
   const { data, error } = useJson(`/repos/${repoId}/metrics/commit-set?commitShas=${shas.join(',')}`, [shas.join(',')]);
   return (
-    <div className="rounded-2xl border border-violet-500/30 bg-violet-500/5 p-5 backdrop-blur">
+    <div className="rounded-2xl border border-violet-500/30 bg-violet-50 p-5 backdrop-blur">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
-        <p className="font-semibold text-violet-200">Commit-set metrics — {fmtInt(shas.length)} selected</p>
-        <button type="button" onClick={onClear} className="rounded-lg px-3 py-1.5 text-xs font-semibold text-slate-400 hover:text-slate-200">
+        <p className="font-semibold text-violet-700">Commit-set metrics — {fmtInt(shas.length)} selected</p>
+        <button type="button" onClick={onClear} className="rounded-lg px-3 py-1.5 text-xs font-semibold text-slate-500 hover:text-slate-700">
           Clear selection
         </button>
       </div>
@@ -27,8 +27,8 @@ function CommitSetPanel({ repoId, shas, onClear }) {
           <StatCard label="λ churn" value={fmtCompact(data.churn)} tone="amber" />
           <StatCard label="n modified" value={fmtInt(data.n)} sub={`η ${fmtInt(data.hSize) > 0 ? ((data.n / data.hSize) * 100).toFixed(0) : 0}%`} tone="violet" />
           {data.topAuthors.slice(0, 6).map((a) => (
-            <div key={a.author_id} className="flex items-center justify-between rounded-xl border border-white/10 bg-slate-900/60 px-4 py-3 text-sm">
-              <span className="truncate text-slate-300">{a.display_name}</span>
+            <div key={a.author_id} className="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm">
+              <span className="truncate text-slate-600">{a.display_name}</span>
               <span className="ml-3 flex items-center gap-2">
                 <span className="tabular-nums text-slate-500">λ {fmtInt(a.churn)}</span>
                 <Bar fraction={a.omega} className="bg-gradient-to-r from-cyan-500 to-sky-400" />
@@ -63,8 +63,8 @@ export default function CommitsPage() {
     <div className="space-y-6">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h2 className="text-2xl font-bold text-white">Commits</h2>
-          <p className="mt-1 text-sm text-slate-400">
+          <h2 className="text-2xl font-bold text-slate-900">Commits</h2>
+          <p className="mt-1 text-sm text-slate-500">
             Browser over the stored non-merge history{data ? ` — ${fmtInt(data.total)} commits` : ''}; select rows to build a manual commit set.
           </p>
         </div>
@@ -80,9 +80,9 @@ export default function CommitsPage() {
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Search commit messages…"
-            className="w-64 rounded-xl border border-white/10 bg-slate-950/60 px-3 py-2 text-sm text-slate-200 placeholder-slate-600 outline-none transition focus:border-violet-500/60 focus:ring-2 focus:ring-violet-500/20"
+            className="w-64 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700 placeholder-slate-400 outline-none transition focus:border-violet-500/60 focus:ring-2 focus:ring-violet-500/20"
           />
-          <button type="submit" className="rounded-xl bg-white/5 px-4 py-2 text-sm font-semibold text-slate-300 transition hover:bg-white/10">
+          <button type="submit" className="rounded-xl bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-600 transition hover:bg-slate-200">
             Search
           </button>
         </form>
@@ -110,17 +110,17 @@ export default function CommitsPage() {
             </thead>
             <tbody>
               {data.rows.map((c) => (
-                <tr key={c.sha} className={`transition hover:bg-white/[0.03] ${selected.includes(c.sha) ? 'bg-violet-500/10' : ''}`}>
+                <tr key={c.sha} className={`transition hover:bg-slate-50 ${selected.includes(c.sha) ? 'bg-violet-500/10' : ''}`}>
                   <Td className="text-center">
                     <input type="checkbox" className="accent-violet-500" checked={selected.includes(c.sha)} onChange={() => toggle(c.sha)} />
                   </Td>
-                  <Td className="font-mono text-[12px] text-violet-300">{c.short_sha}</Td>
-                  <Td className="max-w-96 truncate text-slate-300">{c.message}</Td>
-                  <Td className="max-w-40 truncate text-slate-400">{c.author}</Td>
+                  <Td className="font-mono text-[12px] text-violet-600">{c.short_sha}</Td>
+                  <Td className="max-w-96 truncate text-slate-600">{c.message}</Td>
+                  <Td className="max-w-40 truncate text-slate-500">{c.author}</Td>
                   <NumTd className="whitespace-nowrap text-slate-500">{fmtDateTime(c.committer_ts)}</NumTd>
-                  <NumTd className="text-emerald-300">{fmtInt(c.la)}</NumTd>
-                  <NumTd className="text-rose-300">{fmtInt(c.lr)}</NumTd>
-                  <NumTd className="font-semibold text-white">{fmtInt(c.la + c.lr)}</NumTd>
+                  <NumTd className="text-emerald-600">{fmtInt(c.la)}</NumTd>
+                  <NumTd className="text-rose-600">{fmtInt(c.lr)}</NumTd>
+                  <NumTd className="font-semibold text-slate-900">{fmtInt(c.la + c.lr)}</NumTd>
                 </tr>
               ))}
               {data.rows.length === 0 ? (
@@ -141,7 +141,7 @@ export default function CommitsPage() {
                 type="button"
                 disabled={offset === 0}
                 onClick={() => setOffset(Math.max(0, offset - PAGE))}
-                className="rounded-lg bg-white/5 px-3 py-1.5 font-semibold text-slate-300 transition hover:bg-white/10 disabled:opacity-30"
+                className="rounded-lg bg-slate-100 px-3 py-1.5 font-semibold text-slate-600 transition hover:bg-slate-200 disabled:opacity-30"
               >
                 ← Prev
               </button>
@@ -149,7 +149,7 @@ export default function CommitsPage() {
                 type="button"
                 disabled={offset + PAGE >= data.total}
                 onClick={() => setOffset(offset + PAGE)}
-                className="rounded-lg bg-white/5 px-3 py-1.5 font-semibold text-slate-300 transition hover:bg-white/10 disabled:opacity-30"
+                className="rounded-lg bg-slate-100 px-3 py-1.5 font-semibold text-slate-600 transition hover:bg-slate-200 disabled:opacity-30"
               >
                 Next →
               </button>
@@ -158,9 +158,9 @@ export default function CommitsPage() {
         </>
       ) : null}
       {!f.repoId ? (
-        <div className="rounded-2xl border border-dashed border-white/10 bg-slate-900/40 p-16 text-center">
+        <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-16 text-center">
           <p className="text-3xl">⎇</p>
-          <p className="mt-2 font-semibold text-slate-300">Select a repository</p>
+          <p className="mt-2 font-semibold text-slate-600">Select a repository</p>
         </div>
       ) : null}
     </div>
