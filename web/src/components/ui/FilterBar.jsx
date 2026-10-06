@@ -69,7 +69,7 @@ export default function FilterBar({ showPrefix = false }) {
   const ready = (repos ?? []).filter((r) => r.status === 'ready');
 
   return (
-    <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-slate-200 bg-white p-3 backdrop-blur">
+    <div className="relative z-30 flex flex-wrap items-center gap-3 rounded-2xl border border-slate-200 bg-white p-3 backdrop-blur">
       <span className="ml-1 text-xs font-semibold uppercase tracking-wider text-slate-500">Filter</span>
       <select
         value={f.repoId ?? ''}
