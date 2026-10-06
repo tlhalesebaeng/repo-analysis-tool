@@ -7,8 +7,22 @@ cloned from a remote URL.
 
 ## Status
 
-Scaffolding milestone (M0) complete. Repository ingestion (M1), author
-merging (M2), the metrics engine (M3), and the dashboard (M4) are upcoming.
+Scaffolding (M0) and ingestion (M1) are complete. Author merging (M2),
+metrics engine (M3), and the dashboard (M4) are in progress.
+
+## Reference repositories
+
+Metric correctness and scale performance are validated against these
+real-world repositories:
+
+| Repository | URL | Scale (approx.) |
+| --- | --- | --- |
+| cJSON | https://github.com/DaveGamble/cJSON.git | ~4k commits, ~60 files |
+| Redis | https://github.com/redis/redis.git | ~15k commits, ~1.5k files |
+| Git | https://github.com/git/git.git | ~60k commits, ~2k files |
+
+Import any of them via `POST /api/repos` (JSON `{"url": ...}`) or the UI's
+import wizard and compare metric outputs against `git log --numstat`.
 
 ## Prerequisites
 

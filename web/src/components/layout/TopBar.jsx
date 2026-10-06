@@ -4,9 +4,9 @@ const APP_TAGLINE = 'Git repository metrics dashboard';
 /** Top bar: the full application name above the routed content. */
 export default function TopBar() {
   return (
-    <header className="sticky top-0 z-10 border-b border-slate-200 bg-white px-8 py-4">
-      <h1 className="text-lg font-bold text-slate-900">{APP_NAME}</h1>
-      <p className="text-sm text-slate-500">{APP_TAGLINE}</p>
+    <header className="sticky top-0 z-20 border-b border-white/10 bg-slate-950/70 px-8 py-4 backdrop-blur">
+      <h1 className="bg-gradient-to-r from-white to-slate-400 bg-clip-text text-lg font-bold text-transparent">{APP_NAME}</h1>
+      <p className="text-xs text-slate-500">{APP_TAGLINE}</p>
     </header>
   );
 }
