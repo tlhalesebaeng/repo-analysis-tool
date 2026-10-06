@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { API_BASE } from '@rat/shared/constants';
 import { useFilter, useJson } from '../store.jsx';
 import { fmtCompact, fmtInt } from '../format.js';
@@ -113,6 +114,7 @@ const statusTone = {
 /** Import wizard + repository cards with live progress polling. */
 export default function ReposPage() {
   const { setRepoId } = useFilter();
+  const navigate = useNavigate();
   const { data: repos, error, loading, reload } = useJson('/repos');
   const anyImporting = (repos ?? []).some((r) => r.status === 'importing' || r.status === 'pending');
 
@@ -180,8 +182,11 @@ export default function ReposPage() {
                   {r.status === 'ready' ? (
                     <button
                       type="button"
-                      onClick={() => setRepoId(r.id)}
-                      className="rounded-lg bg-slate-100 px-3 py-1.5 text-xs font-semibold text-violet-600 transition hover:bg-violet-500/20"
+                      onClick={() => {
+                        setRepoId(r.id);
+                        navigate('/dashboard');
+                      }}
+                      className="rounded-lg bg-violet-100 px-3 py-1.5 text-xs font-semibold text-violet-700 transition hover:bg-violet-200"
                     >
                       Select →
                     </button>
