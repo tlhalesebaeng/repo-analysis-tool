@@ -36,7 +36,6 @@ describe('migrations', () => {
     'dirs',
     'commit_file_stats',
     'file_current',
-    'file_ownership',
   ];
 
   it('creates the full initial schema', () => {
@@ -57,7 +56,7 @@ describe('GET /api/health', () => {
     const res = await request(app).get('/api/health');
     expect(res.status).toBe(200);
     expect(res.body).toMatchObject({ ok: true, service: 'rat-server', db: 'ok' });
-    expect(res.body.migrations).toEqual(['001_init.sql']);
+    expect(res.body.migrations).toEqual(['001_init.sql', '002_metrics_spec.sql']);
   });
 });
 

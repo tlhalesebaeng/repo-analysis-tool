@@ -7,12 +7,13 @@ import { createApiRouter } from './api/router.js';
  * can mount the app directly with their own database instance.
  *
  * @param {import('better-sqlite3').Database} db
+ * @param {{ reposDir?: string, queue?: object }} [services] Repos router dependencies.
  */
-export function createApp(db) {
+export function createApp(db, services = {}) {
   const app = express();
   app.disable('x-powered-by');
   app.use(express.json({ limit: '2mb' }));
-  app.use(API_BASE, createApiRouter(db));
+  app.use(API_BASE, createApiRouter(db, services));
 
   // Unknown API routes and mounted-but-unmatched paths return JSON, not HTML.
   app.use((req, res) => {

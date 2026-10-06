@@ -18,6 +18,7 @@
  * @property {string} name
  * @property {RepoSourceType} source_type
  * @property {string | null} source_ref        Original zip filename or remote URL.
+ * @property {string} reference                 Reference commit (branch, tag, or sha) metrics are computed from.
  * @property {RepoStatus} status
  * @property {number} progress_pct             0-100 while importing.
  * @property {string | null} phase             Current import phase (IMPORT_PHASES).
